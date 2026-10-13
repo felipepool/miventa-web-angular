@@ -1,0 +1,116 @@
+<mat-sidenav-container class="layout">
+  <mat-sidenav #menu mode="over" class="sidebar">
+    <div class="sidebar-heading">
+      <div class="sidebar-brand">
+        <span class="sidebar-label">MiVenta</span>
+
+        @if (authStore.negocio(); as negocio) {
+          <span class="sidebar-business">
+            {{ negocio.razonSocial }}
+          </span>
+        }
+      </div>
+
+      <button
+        mat-icon-button
+        type="button"
+        (click)="menu.close()"
+        aria-label="Cerrar menú de navegación">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <nav class="sidebar-nav" aria-label="Navegación principal">
+      <ul class="navigation-list">
+        @for (item of menus(); track item.id) {
+          <li class="navigation-item" routerLinkActive="group-active">
+          @if (item.submenus.length > 0) {
+            <button type="button" class="navigation-row group-toggle"
+              [class.expanded]="expandedMenu() === item.id"
+              [attr.aria-expanded]="expandedMenu() === item.id"
+              [attr.aria-controls]="'submenu-' + item.id"
+              (click)="toggleMenu(item.id)">
+              <mat-icon>{{ item.icono }}</mat-icon>
+              <span class="navigation-label">{{ item.nombre }}</span>
+              <mat-icon class="group-chevron">expand_more</mat-icon>
+            </button>
+              <ul class="submenu-list" [id]="'submenu-' + item.id"
+                [hidden]="expandedMenu() !== item.id">
+                @for (sub of item.submenus; track sub.id) {
+                  <li>
+                  <a
+                    class="navigation-row submenu-link"
+                    [routerLink]="sub.ruta"
+                    routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    ariaCurrentWhenActive="page"
+                    (click)="menu.close()">
+                    <mat-icon>{{ sub.icono }}</mat-icon>
+                    <span class="navigation-label">{{ sub.nombre }}</span>
+                  </a>
+                  </li>
+                }
+              </ul>
+          } @else if (item.ruta; as ruta) {
+              <a
+                class="navigation-row"
+                [routerLink]="ruta"
+                routerLinkActive="active-link"
+                [routerLinkActiveOptions]="{ exact: true }"
+                ariaCurrentWhenActive="page"
+                (click)="menu.close()">
+                <mat-icon>{{ item.icono }}</mat-icon>
+                <span class="navigation-label">{{ item.nombre }}</span>
+              </a>
+          }
+          </li>
+        }
+      </ul>
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <header>
+      <mat-toolbar class="topbar">
+        <button
+          mat-icon-button
+          type="button"
+          (click)="menu.toggle()"
+          aria-label="Abrir menú de navegación">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <span>MIVENTA</span>
+
+        <span class="spacer"></span>
+
+        <button
+          mat-icon-button
+          type="button"
+          [matMenuTriggerFor]="menuUsuario"
+          [disabled]="cerrandoSesion()"
+          aria-label="Abrir menú de usuario">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+
+        <mat-menu #menuUsuario="matMenu" xPosition="before">
+          <button
+            mat-menu-item
+            type="button"
+            (click)="cerrarSesion()"
+            [disabled]="cerrandoSesion()">
+            <mat-icon>logout</mat-icon>
+            <span>Cerrar sesión</span>
+          </button>
+        </mat-menu>
+      </mat-toolbar>
+    </header>
+
+    @if (errorSesion(); as mensaje) {
+      <p role="alert">{{ mensaje }}</p>
+    }
+
+    <main class="page-content">
+      <router-outlet />
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

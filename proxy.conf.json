@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://vmi3551526.contaboserver.net",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

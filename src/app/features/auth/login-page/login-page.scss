@@ -1,0 +1,86 @@
+
+:host {
+  display: block;
+}
+
+.login-container {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 24px;
+  box-sizing: border-box;
+
+  background-color: #f4f6fa;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+
+  padding: 32px;
+  box-sizing: border-box;
+  border-radius: 16px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.login-form mat-form-field {
+  width: 100%;
+}
+
+.login-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 12px;
+}
+
+.login-error {
+  padding: 20px;
+  margin: 15px 0 20px 0;
+  color: #8b1a1a;
+  background-color: #fff0f0;
+  border: 1px solid #8b1a1a;
+  border-radius: 4px;
+}
+
+/* Tablets y celulares */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 24px;
+  }
+}
+
+/* Celulares pequeños */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 12px;
+  }
+
+  .login-card {
+    padding: 20px;
+    border-radius: 12px;
+  }
+}
