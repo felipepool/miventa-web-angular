@@ -4,6 +4,7 @@
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use './styles/forms';
 
 html {
   height: 100%;
@@ -25,6 +26,10 @@ html {
     text-container-shape: 6px,
     tonal-container-shape: 6px,
   ));
+
+  @include mat.dialog-overrides((
+      container-shape: 15px,
+  ));
 }
 
 body {
@@ -45,3 +50,162 @@ body {
   height: 100%;
 }
 /* You can add global styles to this file, and also import other style files */
+.container,
+.container-fluid {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 24px;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+@media (max-width: 599px) {
+  .container,
+  .container-fluid {
+    padding-inline: 16px;
+  }
+}
+
+/* styles.scss */
+mat-card.table-card {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+mat-card.table-card > mat-card-content {
+  padding: 0;
+}
+
+.table-card .table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table-card .table-scroll:focus-visible {
+  outline: 2px solid #005cbb;
+  outline-offset: -2px;
+}
+
+.table-card table {
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.page-heading {
+  min-width: 0;
+}
+
+.page-heading h1 {
+  margin: 0;
+  color: #1f2937;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  font-weight: 600;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.page-heading p {
+  margin: 6px 0 0;
+  color: #4b5563;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 599px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 16px;
+  }
+
+  .page-header > button {
+    width: 100%;
+  }
+}
+
+.title {
+  margin-bottom: 20px ;
+}
+
+.table-card .mat-column-acciones {
+  width: 1%;
+  white-space: nowrap;
+  text-align: end;
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+@media (max-width: 599px) {
+  .table-actions {
+    gap: 0;
+  }
+}
+
+.table-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: clamp(24px, 5vw, 48px) 16px;
+  text-align: center;
+  color: #4b5563;
+  overflow-wrap: anywhere;
+}
+
+.table-empty strong {
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.table-empty p {
+  margin: 0;
+  max-width: 40ch;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.status-badge mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.status-badge--active {
+  color: #166534;
+  background-color: #f0fdf4;
+}
+
+.status-badge--inactive {
+  color: #4b5563;
+  background-color: #f3f4f6;
+}

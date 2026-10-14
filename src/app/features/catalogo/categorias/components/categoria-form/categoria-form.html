@@ -1,0 +1,75 @@
+<h2 mat-dialog-title id="categoria-form-title">
+  {{ titulo }}
+</h2>
+
+<form class="app-form" [formRoot]="categoriaForm">
+  <mat-dialog-content>
+    <p class="form-description">
+      {{ editando
+        ? 'Actualiza los datos de la categoría.'
+        : 'Organiza tus productos con una nueva categoría.' }}
+    </p>
+
+    <div class="form-fields">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+
+        <input
+          matInput
+          [formField]="categoriaForm.nombre"
+          autocomplete="off"
+          placeholder="Ej. Bebidas" />
+
+        @if (
+          categoriaForm.nombre().touched() &&
+          categoriaForm.nombre().invalid()
+        ) {
+          <mat-error>
+            {{ categoriaForm.nombre().errors()[0]?.message }}
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+
+        <textarea
+          matInput
+          [formField]="categoriaForm.descripcion"
+          rows="3"
+          placeholder="Describe qué productos incluye">
+        </textarea>
+      </mat-form-field>
+
+      <mat-slide-toggle [formField]="categoriaForm.activo">
+        Activa
+      </mat-slide-toggle>
+    </div>
+
+    @if (errorGuardado(); as mensaje) {
+      <p role="alert">{{ mensaje }}</p>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button
+        matButton
+        type="button"
+        mat-dialog-close
+        [disabled]="categoriaForm().submitting()">
+      Cancelar
+    </button>
+
+    <button
+        matButton="filled"
+        type="submit"
+        [disabled]="categoriaForm().submitting()">
+      {{ categoriaForm().submitting()
+        ? 'Guardando…'
+        : editando
+          ? 'Guardar cambios'
+          : 'Crear categoría' }}
+    </button>
+
+  </mat-dialog-actions>
+</form>

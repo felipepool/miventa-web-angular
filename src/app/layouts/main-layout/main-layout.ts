@@ -50,22 +50,26 @@ export class MainLayout {
       {
         id: 'categoria-list',
         nombre: 'Categorias',
+        icono: 'list',
         ruta: 'catalogo/categorias',
       },
       {
         id: 'marca-list',
         nombre: 'Marcas',
+        icono: 'list',
         ruta: 'catalogo/marcas',
-      },
-      {
-        id: 'product-list',
-        nombre: 'Productos',
-        ruta: 'catalogo/productos',
       },
       {
         id: 'modificadores-list',
         nombre: 'Modificadores',
+        icono: 'list',
         ruta: 'catalogo/modificadores',
+      },
+      {
+        id: 'product-list',
+        nombre: 'Productos',
+        icono: 'list',
+        ruta: 'catalogo/productos',
       },
     ]
   },

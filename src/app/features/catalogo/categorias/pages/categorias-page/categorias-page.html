@@ -1,1 +1,129 @@
-<p>categorias-page works!</p>,
+<section class="container-fluid page">
+  <header class="page-header">
+    <div class="page-heading">
+      <h1>Categorías</h1>
+      <p>Organiza tus productos por categoría.</p>
+    </div>
+
+    <button matButton="filled" type="button" (click)="agregar()">
+      <mat-icon>add</mat-icon>
+      Nueva categoría
+    </button>
+  </header>
+
+<mat-card class="table-card" appearance="outlined">
+  <mat-card-content>
+    <div
+      class="table-scroll"
+      role="region"
+      aria-label="Listado de categorías"
+      tabindex="0">
+
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+        <td mat-cell *matCellDef="let element"> {{ element.descripcion ?? 'S/D'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="activa">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+
+        <td mat-cell *matCellDef="let categoria">
+          <span
+            class="status-badge"
+            [class.status-badge--active]="categoria.activo"
+            [class.status-badge--inactive]="!categoria.activo">
+            <mat-icon aria-hidden="true">
+              {{ categoria.activo ? 'check_circle' : 'cancel' }}
+            </mat-icon>
+
+            {{ categoria.activo ? 'Activa' : 'Inactiva' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+
+        <td mat-cell *matCellDef="let categoria">
+          <div class="table-actions">
+            <button
+              mat-icon-button
+              type="button"
+              matTooltip="Editar"
+              [attr.aria-label]="'Editar ' + categoria.name"
+              (click)="editar(categoria)">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button
+              mat-icon-button
+              type="button"
+              [matMenuTriggerFor]="accionesMenu"
+              [attr.aria-label]="'Más acciones para ' + categoria.name">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+              <mat-menu #accionesMenu="matMenu">
+                <button
+                  mat-menu-item
+                  type="button"
+                  (click)="desactivar(categoria)">
+                  <mat-icon>block</mat-icon>
+                  <span>Desactivar</span>
+                </button>
+
+                <button
+                  mat-menu-item
+                  type="button"
+                  (click)="confirmarEliminar(categoria)">
+                  <mat-icon>delete_outline</mat-icon>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </div>
+          </td>
+        </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td [attr.colspan]="displayedColumns.length">
+          <div class="table-empty">
+            @if (categoriasResource.isLoading()) {
+              <p role="status">Cargando categorías…</p>
+            } @else if (categoriasResource.error()) {
+              <p role="alert">No se pudieron cargar las categorías.</p>
+
+              <button
+                matButton="outlined"
+                type="button"
+                (click)="categoriasResource.reload()">
+                Reintentar
+              </button>
+            } @else {
+              <mat-icon aria-hidden="true">category</mat-icon>
+              <strong>Todavía no tienes categorías</strong>
+              <p>Crea la primera para organizar tus productos.</p>
+            }
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <mat-paginator
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Paginación de categorías">
+    </mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>
+</section>
